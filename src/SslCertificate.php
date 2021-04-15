@@ -44,7 +44,7 @@ final class SslCertificate
     protected $revokedTime = null;
 
     /** @var \OpenSSLCertificate */
-    protected $openSSLCertificate;
+    protected $openSSLCertificate = null;
 
     public static function createForHostName(string $url, int $timeout = 30): self
     {
@@ -118,6 +118,7 @@ final class SslCertificate
         $this->certificateChains = self::parseCertChains($downloadResults['full_chain']);
         $this->connectionMeta = $downloadResults['connection'];
         $this->serial = new BigInteger($downloadResults['cert']['serialNumber']);
+        $this->openSSLCertificate = $downloadResults['openSSLCertificate'];
 
         if (isset($downloadResults['cert']['extensions']['crlDistributionPoints'])) {
             $this->crlLinks = self::parseCrlLinks($downloadResults['cert']['extensions']['crlDistributionPoints']);
