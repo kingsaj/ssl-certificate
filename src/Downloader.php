@@ -76,6 +76,7 @@ final class Downloader
             'cert' => $mainCert,
             'full_chain' => $full_chain,
             'connection' => $connectionInfo,
+            'openSSLCertificate' => $response['ssl']['peer_certificate'],
         ];
     }
 

@@ -43,6 +43,9 @@ final class SslCertificate
     /** @var Carbon */
     protected $revokedTime = null;
 
+    /** @var \OpenSSLCertificate */
+    protected $openSSLCertificate;
+
     public static function createForHostName(string $url, int $timeout = 30): self
     {
         $downloadResults = Downloader::downloadCertificateFromUrl($url, $timeout);
@@ -349,5 +352,10 @@ final class SslCertificate
         $wildcardHostWithoutWildcard = substr($wildcardHost, 2);
 
         return substr_count($wildcardHost, '.') >= substr_count($host, '.') && ends_with($host, $wildcardHostWithoutWildcard);
+    }
+
+    public function getOpenSSLCertificate() : \OpenSSLCertificate
+    {
+        return $this->openSSLCertificate;
     }
 }
